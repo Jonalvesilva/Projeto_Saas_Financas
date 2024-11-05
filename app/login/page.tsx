@@ -1,8 +1,15 @@
 import Image from "next/image";
 import { Button } from "../_components/ui/button";
 import { LogInIcon } from "lucide-react";
+import { SignInButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-export default function Login() {
+export default async function Login() {
+  const { userId } = await auth();
+  if (userId) {
+    redirect("/");
+  }
   return (
     <>
       <section className="w-full h-screen min-h-[550px] bg-gradient-to-br from-slate-900 to-black ">
@@ -23,12 +30,14 @@ export default function Login() {
               empresa, nossa plataforma oferece todas as ferramentas necessárias
               para tornar a gestão financeira mais acessível e inteligente.
             </p>
-            <Button
-              variant="outline"
-              className="bg-transparent text-white hover:bg-white hover:text-black duration-300 mt-10 w-full lg:w-fit"
-            >
-              <LogInIcon /> Fazer login ou criar uma conta
-            </Button>
+            <SignInButton>
+              <Button
+                variant="outline"
+                className="bg-transparent text-white hover:bg-white hover:text-black duration-300 mt-10 w-full lg:w-fit"
+              >
+                <LogInIcon /> Fazer login ou criar uma conta
+              </Button>
+            </SignInButton>
           </div>
           <div className="hidden md:flex relative w-full h-full">
             <Image src="/login.jpg" fill alt="login" className="object-cover" />
