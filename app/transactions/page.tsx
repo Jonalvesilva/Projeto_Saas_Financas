@@ -9,11 +9,15 @@ export default async function Transactions() {
 
   return (
     <>
-      <section className="w-full h-screen min-h-[550px] bg-gradient-to-br from-slate-900 to-black ">
-        <div className="w-full flex items-center justify-between px-3 py-6">
+      <section className="w-full h-screen min-h-[550px] bg-black px-4">
+        <div className="w-full flex items-center justify-between py-6">
           <h1 className="font-bold text-2xl text-white">Transações</h1>
-          <Button variant="outline" className="rounded-full">
-            Adicionar Transação<ArrowDownUpIcon></ArrowDownUpIcon>
+          <Button
+            variant="outline"
+            className="rounded-full max-[370px]:p-0 max-[370px]:px-2"
+          >
+            Adicionar Transação
+            <ArrowDownUpIcon className="max-[370px]:hidden"></ArrowDownUpIcon>
           </Button>
         </div>
         <DataTable columns={transactionColumns} data={transactions} />
