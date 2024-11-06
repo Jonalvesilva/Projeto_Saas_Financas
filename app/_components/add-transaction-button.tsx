@@ -45,10 +45,12 @@ import {
   TRANSACTION_TYPE_LABEL,
 } from "../_constants/constants";
 import { DatePicker } from "./ui/date-picker";
+import { addTransaction } from "../_actions/add-transaction";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, { message: "O nome é obrigatório" }),
-  amount: z.string().trim().min(1, { message: "O valor é obrigatório" }),
+  amount: z.number({ required_error: "O valor é obrigatório" }),
   type: z.nativeEnum(TransactionType, {
     required_error: "O tipo é obrigatório",
   }),
@@ -68,7 +70,7 @@ export default function AddTransactionButton() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      amount: "",
+      amount: 0,
       category: TransactionCategory.OTHER,
       date: new Date(),
       paymentMethod: TransactionPaymentMethod.CASH,
@@ -76,13 +78,23 @@ export default function AddTransactionButton() {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      await addTransaction(data);
+      setIsOpen(false);
+      form.reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const [dialogIsOpen, setIsOpen] = useState(false);
 
   return (
     <Dialog
+      open={dialogIsOpen}
       onOpenChange={(open) => {
+        setIsOpen(true);
         if (!open) {
           form.reset();
         }
@@ -130,8 +142,12 @@ export default function AddTransactionButton() {
                   <FormControl>
                     <MoneyInput
                       placeholder="Digite o Valor"
-                      {...field}
                       className="focus-visible:ring-0"
+                      onValueChange={({ floatValue }) =>
+                        field.onChange(floatValue)
+                      }
+                      onBlur={field.onBlur}
+                      disabled={field.disabled}
                     />
                   </FormControl>
                   <FormMessage />
