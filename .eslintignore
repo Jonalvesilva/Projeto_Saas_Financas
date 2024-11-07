@@ -2,3 +2,5 @@ prisma.ts
 command.tsx
 input.tsx
 money-input.tsx
+mobileDialog.tsx
+upsert-transaction-dialog.tsx
