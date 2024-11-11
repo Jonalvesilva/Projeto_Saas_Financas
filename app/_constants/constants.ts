@@ -27,3 +27,78 @@ export const TRANSACTION_TYPE_LABEL = [
   { value: TransactionType.DEPOSIT, label: "Depósito" },
   { value: TransactionType.INVESTMENT, label: "Investimento" },
 ];
+
+export const MONTH_OPTIONS = [
+  {
+    value: 12,
+    label: "Dezembro",
+  },
+  {
+    value: 11,
+    label: "Novembro",
+  },
+  {
+    value: 10,
+    label: "Outubro",
+  },
+  {
+    value: 9,
+    label: "Setembro",
+  },
+  {
+    value: 8,
+    label: "Agosto",
+  },
+  {
+    value: 7,
+    label: "Julho",
+  },
+  {
+    value: 6,
+    label: "Junho",
+  },
+  {
+    value: 5,
+    label: "Maio",
+  },
+  {
+    value: 4,
+    label: "Abril",
+  },
+  {
+    value: 3,
+    label: "Março",
+  },
+  {
+    value: 2,
+    label: "Fevereiro",
+  },
+  {
+    value: 1,
+    label: "Janeiro",
+  },
+];
+
+interface MonthYears {
+  year: number;
+  month: number;
+  label: string;
+}
+
+export const monthYearsObjCreate = (yearLimit: number) => {
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
+  const arr: Array<MonthYears> = [];
+
+  for (let i = year; i >= yearLimit; i--) {
+    MONTH_OPTIONS.map((item) => {
+      if (!(i == year && item.value > month))
+        arr.push({
+          year: i,
+          month: item.value,
+          label: `${item.label} ${i}`,
+        });
+    });
+  }
+  return arr;
+};
