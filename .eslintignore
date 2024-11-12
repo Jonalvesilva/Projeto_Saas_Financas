@@ -4,3 +4,4 @@ input.tsx
 money-input.tsx
 mobileDialog.tsx
 upsert-transaction-dialog.tsx
+chart.tsx
