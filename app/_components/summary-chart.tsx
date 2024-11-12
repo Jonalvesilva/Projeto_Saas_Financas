@@ -11,7 +11,11 @@ import {
   ChartTooltipContent,
 } from "./ui/chart";
 import { TransactionType } from "@prisma/client";
-import { TypePercentage } from "../_data/get-dashboard";
+import {
+  TypePercentage,
+  TotalExpensePerCategory,
+} from "../_data/get-dashboard";
+import ExpensesPerCategory from "./expenses-per-category";
 
 const chartConfig = {
   [TransactionType.INVESTMENT]: {
@@ -34,6 +38,7 @@ export interface TransactionChart {
   investiments: number;
   expenses: number;
   typesPercentage: TypePercentage;
+  totalExpensePerCategory?: TotalExpensePerCategory[];
 }
 
 interface Data {
@@ -65,11 +70,9 @@ export default function SummaryChart(data: Data) {
     },
   ];
 
-  console.log(data.data.expenses);
-
   return (
     <div className="mt-6 grid grid-cols-1 xl:grid-cols-[1fr,2fr] xl:gap-x-6">
-      <div>
+      <div className="mb-6 lg:mb-0">
         {" "}
         <Card className="flex flex-col bg-gray-50/25">
           <CardContent className="flex-1 pb-0">
@@ -133,7 +136,9 @@ export default function SummaryChart(data: Data) {
           </div>
         </Card>
       </div>
-      <div className="h-16 border border-white"></div>
+      <ExpensesPerCategory
+        expensesPerCategory={data.data.totalExpensePerCategory}
+      />
     </div>
   );
 }
