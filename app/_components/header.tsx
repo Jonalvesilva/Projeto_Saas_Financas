@@ -1,5 +1,4 @@
 "use client";
-import { UserButton } from "@clerk/nextjs";
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,9 +10,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../_components/ui/sheet_modify";
+import dynamic from "next/dynamic";
 
 export default function Header() {
   const pathname = usePathname();
+  const UserProfileComponent = dynamic(() => import("./header-user-profile"), {
+    ssr: false,
+  });
 
   return (
     <div className="h-[70px] bg-gradient-to-tl from-cyan-900 to-slate-900">
@@ -111,22 +114,7 @@ export default function Header() {
             </Sheet>
           </div>
         </div>
-        <div className="hidden min-[370px]:flex">
-          <UserButton
-            showName
-            appearance={{
-              elements: {
-                userButtonOuterIdentifier: {
-                  color: "white",
-                  fontSize: "16px",
-                },
-              },
-            }}
-          />
-        </div>
-        <div className="flex min-[370px]:hidden">
-          <UserButton />
-        </div>
+        <UserProfileComponent />
       </nav>
     </div>
   );
