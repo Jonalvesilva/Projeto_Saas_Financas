@@ -108,12 +108,27 @@ export const monthYearsObjCreate = (yearLimit: number) => {
   return arr;
 };
 
-export const TRANSACTION_PAYMENT_LABEL_ICON = [
-  { keyPay: "CREDIT_CARD", value: <CiCreditCard1 /> },
-  { keyPay: "DEBIT_CARD", value: <CiCreditCard2 /> },
-  { keyPay: "CASH", value: <BsCash /> },
-  { keyPay: "BANK_TRANSFER", value: <CiBank /> },
-  { keyPay: "BANK_SLIP", value: <HiOutlineCash /> },
-  { keyPay: "PIX", value: <MdPix /> },
-  { keyPay: "OTHER", value: <RiFunctionLine /> },
-];
+type PaymentMethod =
+  | "CREDIT_CARD"
+  | "DEBIT_CARD"
+  | "CASH"
+  | "BANK_TRANSFER"
+  | "BANK_SLIP"
+  | "PIX"
+  | "OTHER";
+
+export const TRANSACTION_PAYMENT_LABEL_ICON: {
+  [key in PaymentMethod]: JSX.Element;
+} = {
+  CREDIT_CARD: (
+    <CiCreditCard1 size={38} className="relative right-1 text-white" />
+  ),
+  DEBIT_CARD: (
+    <CiCreditCard2 size={38} className="relative right-1 text-white" />
+  ),
+  CASH: <BsCash size={30} className="text-white" />,
+  BANK_TRANSFER: <CiBank size={38} className="text-white relative right-1" />,
+  BANK_SLIP: <HiOutlineCash size={35} className="text-white" />,
+  PIX: <MdPix size={35} className="text-white" />,
+  OTHER: <RiFunctionLine size={35} className="text-white" />,
+};

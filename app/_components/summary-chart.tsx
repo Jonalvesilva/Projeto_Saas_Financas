@@ -10,7 +10,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "./ui/chart";
-import { TransactionType } from "@prisma/client";
+import { Transaction, TransactionType } from "@prisma/client";
 import {
   TypePercentage,
   TotalExpensePerCategory,
@@ -39,6 +39,7 @@ export interface TransactionChart {
   expenses: number;
   typesPercentage: TypePercentage;
   totalExpensePerCategory?: TotalExpensePerCategory[];
+  lastTransactions?: Transaction[];
 }
 
 interface Data {
@@ -72,13 +73,13 @@ export default function SummaryChart(data: Data) {
 
   return (
     <div className="mt-6 grid grid-cols-1 xl:grid-cols-[1fr,2fr] xl:gap-x-6">
-      <div className="mb-6 lg:mb-0">
+      <div className="mb-6 xl:mb-0">
         {" "}
         <Card className="flex flex-col bg-gray-50/25">
           <CardContent className="flex-1 pb-0">
             <ChartContainer
               config={chartConfig}
-              className="mx-auto aspect-square max-h-[250px] "
+              className="mx-auto aspect-square max-h-[250px] xl:h-[600px] xl:max-h-[400px] xl:w-[300px]"
             >
               <PieChart>
                 <ChartTooltip
