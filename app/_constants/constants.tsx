@@ -1,4 +1,9 @@
 import { TransactionType } from "@prisma/client";
+import { CiCreditCard1, CiCreditCard2, CiBank } from "react-icons/ci";
+import { HiOutlineCash } from "react-icons/hi";
+import { BsCash } from "react-icons/bs";
+import { MdPix } from "react-icons/md";
+import { RiFunctionLine } from "react-icons/ri";
 
 export const TRANSACTION_CATEGORY_LABEL = {
   EDUCATION: "Educação",
@@ -102,3 +107,13 @@ export const monthYearsObjCreate = (yearLimit: number) => {
   }
   return arr;
 };
+
+export const TRANSACTION_PAYMENT_LABEL_ICON = [
+  { keyPay: "CREDIT_CARD", value: <CiCreditCard1 /> },
+  { keyPay: "DEBIT_CARD", value: <CiCreditCard2 /> },
+  { keyPay: "CASH", value: <BsCash /> },
+  { keyPay: "BANK_TRANSFER", value: <CiBank /> },
+  { keyPay: "BANK_SLIP", value: <HiOutlineCash /> },
+  { keyPay: "PIX", value: <MdPix /> },
+  { keyPay: "OTHER", value: <RiFunctionLine /> },
+];
