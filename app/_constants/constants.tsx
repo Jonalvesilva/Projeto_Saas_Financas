@@ -120,15 +120,17 @@ type PaymentMethod =
 export const TRANSACTION_PAYMENT_LABEL_ICON: {
   [key in PaymentMethod]: JSX.Element;
 } = {
-  CREDIT_CARD: (
-    <CiCreditCard1 size={38} className="relative right-1 text-white" />
-  ),
-  DEBIT_CARD: (
-    <CiCreditCard2 size={38} className="relative right-1 text-white" />
-  ),
+  CREDIT_CARD: <CiCreditCard1 size={30} className=" text-white" />,
+  DEBIT_CARD: <CiCreditCard2 size={30} className=" text-white" />,
   CASH: <BsCash size={30} className="text-white" />,
-  BANK_TRANSFER: <CiBank size={38} className="text-white relative right-1" />,
-  BANK_SLIP: <HiOutlineCash size={35} className="text-white" />,
-  PIX: <MdPix size={35} className="text-white" />,
-  OTHER: <RiFunctionLine size={35} className="text-white" />,
+  BANK_TRANSFER: <CiBank size={30} className="text-white" />,
+  BANK_SLIP: <HiOutlineCash size={30} className="text-white" />,
+  PIX: <MdPix size={30} className="text-white" />,
+  OTHER: <RiFunctionLine size={30} className="text-white" />,
+};
+
+export const TRANSACTION_PAYMENT_TEXT_COLOR = {
+  DEPOSIT: "text-green-500",
+  EXPENSE: "text-red-500",
+  INVESTMENT: "text-yellow-500",
 };
