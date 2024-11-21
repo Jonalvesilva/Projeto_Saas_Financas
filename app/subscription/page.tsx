@@ -18,7 +18,7 @@ export default async function Subscription() {
             <h1 className="font-bold text-2xl text-white">Assinatura</h1>
           </div>
           <div className="flex flex-grow justify-center lg:items-center">
-            <PlansPricing currentPlan="basic" />
+            <PlansPricing />
           </div>
         </div>
       </section>

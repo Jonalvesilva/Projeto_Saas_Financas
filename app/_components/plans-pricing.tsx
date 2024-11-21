@@ -1,17 +1,15 @@
 "use client";
+import { useUser } from "@clerk/nextjs";
 import createCheckout from "../subscription/_actions/create-checkout";
 import { Button } from "./ui/button";
 import { loadStripe } from "@stripe/stripe-js";
+import Link from "next/link";
 
 interface PlansPricing {
-  currentPlan?: string;
   numberTransaction?: string;
 }
 
-export default function PlansPricing({
-  currentPlan,
-  numberTransaction,
-}: PlansPricing) {
+export default function PlansPricing({ numberTransaction }: PlansPricing) {
   const handleAcquirePlanClick = async () => {
     const { sessionId } = await createCheckout();
 
@@ -29,6 +27,9 @@ export default function PlansPricing({
     await stripe.redirectToCheckout({ sessionId });
   };
 
+  const { user } = useUser();
+  const hasPremium = user?.publicMetadata.subscriptionPlan == "premium";
+
   return (
     <div className="relative isolate">
       <div className="flex flex-col gap-y-4  lg:flex-row lg:items-center lg:justify-center">
@@ -37,7 +38,12 @@ export default function PlansPricing({
             id="tier-hobby"
             className="text-base/7 font-semibold text-indigo-600"
           >
-            Básico
+            Básico{" "}
+            <span
+              className={`${!hasPremium ? "inline bg-green-700 px-2 py-1 ml-4 rounded-xl text-white" : "hidden"}`}
+            >
+              Ativado
+            </span>
           </h3>
           <p className="mt-4 flex items-baseline gap-x-2">
             <span className="text-5xl font-semibold tracking-tight text-gray-900">
@@ -109,6 +115,11 @@ export default function PlansPricing({
             className="text-base/7 font-semibold text-indigo-400"
           >
             Professional
+            <span
+              className={`${hasPremium ? "inline bg-green-700 px-2 py-1 ml-4 rounded-xl text-white" : "hidden"}`}
+            >
+              Ativado
+            </span>
           </h3>
           <p className="mt-4 flex items-baseline gap-x-2">
             <span className="text-5xl font-semibold tracking-tight text-white">
@@ -173,19 +184,26 @@ export default function PlansPricing({
             </li>
           </ul>
 
-          {currentPlan == "basic" ? (
+          {!hasPremium ? (
             <Button
-              variant="outline"
+              variant="ghost"
               onClick={handleAcquirePlanClick}
               aria-describedby="tier-enterprise"
-              className="w-full mt-8 block rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 sm:mt-10"
+              className="w-full mt-8 block rounded-md bg-indigo-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 sm:mt-10"
             >
               Adquirir plano{" "}
             </Button>
           ) : (
-            <li className="w-full mt-8 block rounded-md border border-indigo-200 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 sm:mt-10">
-              Plano Ativado
-            </li>
+            <Link
+              href={`${process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL as string}?prefilled_email=${user.emailAddresses[0].emailAddress}`}
+            >
+              <Button
+                variant="ghost"
+                className="w-full mt-8 block rounded-md bg-indigo-800  px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 sm:mt-10"
+              >
+                Gerenciar Plano
+              </Button>
+            </Link>
           )}
         </div>
       </div>
