@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Header from "./_components/header";
-import { CgFileDocument } from "react-icons/cg";
 import SummaryCard from "./_components/summary-card";
 import TimeSelect from "./_components/time-select";
 import { MONTH_OPTIONS } from "./_constants/constants";
@@ -43,10 +42,6 @@ export default async function Home({
             </h1>
             <h1 className="font-bold text-2xl text-white md:hidden">{title}</h1>
             <div className="text-white flex items-center gap-x-4">
-              <div className="flex items-center gap-x-2">
-                <span>Relatório IA</span>
-                <CgFileDocument />
-              </div>
               <TimeSelect />
             </div>
           </div>
