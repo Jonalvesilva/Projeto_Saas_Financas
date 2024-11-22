@@ -17,7 +17,7 @@ export default function PlansPricing({ numberTransaction }: PlansPricing) {
       throw new Error("Stripe publishable key not found");
     }
     const stripe = await loadStripe(
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
     );
 
     if (!stripe) {
