@@ -11,13 +11,18 @@ export interface TotalExpensePerCategory {
   percentageOfTotal: number;
 }
 
-export const getDashboard = async (month: string, year: string) => {
+export const getDashboard = async (
+  month: string,
+  year: string,
+  userId: string,
+) => {
   const where = {
     date: month &&
       year && {
         gte: new Date(`${year}-${month}-01`),
         lt: new Date(`${year}-${month}-31`),
       },
+    userId,
   };
   const deposits = Number(
     (

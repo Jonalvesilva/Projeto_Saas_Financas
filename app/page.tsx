@@ -29,7 +29,7 @@ export default async function Home({
     ? `${MONTH_OPTIONS.filter((item) => item.value == Number(month))[0].label} ${year}`
     : `Geral`;
 
-  const dataChart: TransactionChart = await getDashboard(month, year);
+  const dataChart: TransactionChart = await getDashboard(month, year, userId);
 
   return (
     <>
@@ -52,7 +52,7 @@ export default async function Home({
           </div>
           <div className="grid grid-cols-1 lg:gap-x-6 lg:grid-cols-[1fr,420px]">
             <div className="lg:col-span-1">
-              <SummaryCard month={month} year={year} />
+              <SummaryCard month={month} year={year} userId={userId} />
               <SummaryChart data={dataChart} />
             </div>
             <div>

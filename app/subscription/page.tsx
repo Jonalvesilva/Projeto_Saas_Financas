@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Header from "../_components/header";
 import PlansPricing from "../_components/plans-pricing";
+import { currentMonthTransaction } from "../_data/get-current-month-transactions";
 
 export default async function Subscription() {
   const { userId } = await auth();
@@ -9,6 +10,9 @@ export default async function Subscription() {
   if (!userId) {
     redirect("/login");
   }
+
+  const numberTransaction = await currentMonthTransaction(userId);
+
   return (
     <>
       <Header />
@@ -18,7 +22,7 @@ export default async function Subscription() {
             <h1 className="font-bold text-2xl text-white">Assinatura</h1>
           </div>
           <div className="flex flex-grow justify-center lg:items-center">
-            <PlansPricing />
+            <PlansPricing numberTransaction={String(numberTransaction)} />
           </div>
         </div>
       </section>

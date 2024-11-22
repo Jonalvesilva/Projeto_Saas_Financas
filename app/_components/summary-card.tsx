@@ -8,19 +8,22 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 import SummaryCardItem from "./summary-card-item";
 import UpsertTransactionButton from "./add-transaction-button";
 import { db } from "../_lib/prisma";
+import { canUserAddTransaction } from "../_data/can-user-add-transaction";
 
 interface Props {
   month: string;
   year: string;
+  userId: string;
 }
 
-export default async function SummaryCard({ month, year }: Props) {
+export default async function SummaryCard({ month, year, userId }: Props) {
   const where = {
     date: month &&
       year && {
         gte: new Date(`${year}-${month}-01`),
         lt: new Date(`${year}-${month}-31`),
       },
+    userId,
   };
   const deposits = Number(
     (
@@ -48,6 +51,8 @@ export default async function SummaryCard({ month, year }: Props) {
   );
   const balance = deposits - investiments - expenses;
 
+  const userCanAdd = await canUserAddTransaction();
+
   return (
     <>
       <Card className="bg-gray-50/30">
@@ -60,7 +65,7 @@ export default async function SummaryCard({ month, year }: Props) {
               />
               <p className="text-white">Saldo</p>
             </div>
-            <UpsertTransactionButton />
+            <UpsertTransactionButton userCanAddTransaction={userCanAdd} />
           </div>
         </CardHeader>
         <CardContent>
