@@ -32,7 +32,7 @@ export default async function Transactions() {
           <UpsertTransactionButton userCanAddTransaction={userCanAdd} />
         </div>
 
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 overflow-auto notShowScrollbar">
           <DataTable columns={transactionColumns} data={transactions} />
         </div>
       </section>
