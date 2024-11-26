@@ -16,6 +16,9 @@ export default async function Transactions() {
 
   const transactions = await db.transaction.findMany({
     where: { userId: userId },
+    orderBy: {
+      date: "desc",
+    },
   });
 
   const userCanAdd = await canUserAddTransaction();
