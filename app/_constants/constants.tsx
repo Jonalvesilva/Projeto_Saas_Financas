@@ -20,7 +20,7 @@ export const TRANSACTION_CATEGORY_LABEL = {
 export const TRANSACTION_PAYMENT_LABEL = {
   CREDIT_CARD: "Cartão de Credito",
   DEBIT_CARD: "Cartão de Debito",
-  BAK_TRANSFER: "Transferência Bancária",
+  BANK_TRANSFER: "Transferência Bancária",
   BANK_SLIP: "Boleto",
   CASH: "Dinheiro",
   PIX: "Pix",
