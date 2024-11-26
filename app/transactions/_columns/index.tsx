@@ -1,15 +1,15 @@
 "use client";
 
 import { Badge } from "@/app/_components/ui/badge";
-import { Button } from "@/app/_components/ui/button";
 import { Transaction, TransactionType } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { TrashIcon } from "lucide-react";
+
 import {
   TRANSACTION_CATEGORY_LABEL,
   TRANSACTION_PAYMENT_LABEL,
 } from "../../_constants/constants";
 import EditTransactionButton from "../_components/edit-transaction-button";
+import DeleteTransactionDialog from "../_components/delete-transaction-dialog";
 
 export const transactionColumns: ColumnDef<Transaction>[] = [
   {
@@ -85,9 +85,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     cell: ({ row: { original: transaction } }) => (
       <div className="flex justify-center">
         <EditTransactionButton transaction={transaction} />
-        <Button variant="ghost" size="icon">
-          <TrashIcon />
-        </Button>
+        <DeleteTransactionDialog transactionId={transaction.id} />
       </div>
     ),
   },
